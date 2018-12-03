@@ -15,6 +15,7 @@ input:focus {
 
 /* messages container is flex; */
 .message {
+  position: relative;
   padding: 20px;
   max-width: 600px;
   border-radius: 15px;
@@ -22,12 +23,12 @@ input:focus {
 }
 
 .message.user_message {
-  background: green;
+  background: #DBF8C9;
   align-self: flex-end;
 }
 
 .message.contact_message {
-  background: cyan;
+  background: white;
 }
 
 .profile_pic_cnt {
@@ -47,6 +48,7 @@ input:focus {
 }
 
 .nav_icon {
+  cursor: pointer;
   width:40px;
   height:40px;
   margin-right: 20px;
@@ -58,14 +60,12 @@ input:focus {
   overflow: hidden;
   height: 100vh;
   width: 100vw;
-  /* background: orange; */
 }
 
 .app_left {
   float: left;
   height: 100vh;
   width: 400px;
-  /* background: red; */
 }
 
 .app_right {
@@ -84,7 +84,7 @@ input:focus {
   justify-content: flex-end;
   align-items: center;
   border-right: 1px solid grey;
-  background: #ece5dd;
+  background: #EEEEEE;
 }
 
 .search_bar_cnt {
@@ -92,6 +92,7 @@ input:focus {
   display: flex;
   justify-content: center;
   align-items: center;
+  border-bottom: 1px solid lightgrey;
   background: #FBFBFB;
 }
 
@@ -105,9 +106,14 @@ input:focus {
   justify-content: space-between;
   align-items: center;
   line-height: 60px;
-  border: 1px solid black;
-  border-radius: 20px;
+  border-style: none;
+  border-radius: 5px;
   background: white;
+}
+
+.search_bar .nav_icon {
+  width: 20px;
+  height: 20px;
 }
 
 .search_bar input {
@@ -122,14 +128,12 @@ input:focus {
   overflow-x: hidden;
   height: calc(100vh - 180px);
   width: 400px;
-  /* background: lightcoral; */
 }
 
 .contacts_list .contact {
   position: relative;
   height: 100px;
   width: 400px;
-  border-bottom: 1px solid black;
 }
 
 .contact_photo {
@@ -137,14 +141,13 @@ input:focus {
   float: left;
   height: 100px;
   width: 100px;
-  /* background: yellow; */
 }
 
 .contact_chat_data {
   float: left;
   height: 100px;
   width: 300px;
-  /* background: cyan; */
+  border-bottom: 1px solid lightgrey;
 }
 
 .contact_chat_name_and_message {
@@ -153,7 +156,6 @@ input:focus {
   padding: 0px 15px;
   margin-top: 15px;
   line-height: 35px;
-  /* background: white; */
 }
 
 .contact_chat_name_and_message .last_message {
@@ -170,19 +172,23 @@ input:focus {
   flex-direction: column;
   justify-content: space-around;
   align-items: flex-end;
-  /* background: yellow; */
+}
+
+.contact_chat_icons .last_received_time {
+  align-self: center;
+  font-size: 12px;
 }
 
 .contact_chat_icons .nav_icon {
-  height: 30px;
-  width: 30px;
+  height: 20px;
+  width: 20px;
 }
 
 /* App right */
 
 .app_right .conversation_nav {
   height: 100px;
-  background: #ece5dd;
+  background: #EEEEEE;
 }
 
 .contact_data {
@@ -195,6 +201,16 @@ input:focus {
   width:300px;
   color: black;
 }
+
+.contact_data .contact_name {
+  margin-bottom: 5px;
+}
+
+.contact_data .last_access {
+  font-size: bold;
+  color: grey;
+}
+
 
 .chat_actions {
   float: left;
@@ -213,13 +229,25 @@ input:focus {
   background-image: url('assets/sfondoChat.png');
 }
 
+.message_time {
+  float: right;
+  color: grey;
+  font-size: 14px;
+}
+
+.message_time .isRead {
+  margin-left:5px;
+}
+
+/* Typing Area */
+
 .typing_area {
   height: 80px;
   padding-left: 20px;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background: #ece5dd;
+  background: #EEEEEE;;
 }
 
 .typing_area .message_bar {
@@ -227,11 +255,15 @@ input:focus {
   margin-right: 20px;
 }
 
-.typing_area #input_messaggio {
+.typing_area #message_input {
   height: 50px;
   font-size: 20px;
   border-radius: 25px;
   border-style: none;
   padding-left: 20px;
   width:100%;
+}
+
+.typing_area #send_message {
+display: none;
 }
