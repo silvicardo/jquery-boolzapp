@@ -4,7 +4,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background: black;
+  font-family: 'Montserrat', sans-serif;
+}
+
+input:focus {
+  outline-style: none;
 }
 
 /* components */
@@ -24,6 +28,23 @@
 
 .message.contact_message {
   background: cyan;
+}
+
+.profile_pic_cnt {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  height: 60px;
+  width: 60px;
+  border-radius: 100%;
+  background: white;
+}
+
+.nav_icon {
+  width:40px;
+  height:40px;
+  margin-right: 20px;
 }
 
 /* main containers */
@@ -52,13 +73,43 @@
 /* App Left */
 
 .app_left .general_options {
+  position: relative;
   height: 100px;
-  background: black;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border-right: 1px solid grey;
+  background: #ece5dd;
+}
+
+.search_bar_cnt {
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #FBFBFB;
 }
 
 .search_bar {
-  height: 80px;
-  background: grey;
+  overflow: hidden;
+  position: relative;
+  padding-left: 20px;
+  width: 95%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 60px;
+  border: 1px solid black;
+  border-radius: 20px;
+  background: white;
+}
+
+.search_bar input {
+  height: 60px;
+  width: 90%;
+  font-size: 15px;
+  border-style: none;
 }
 
 .contacts_list {
@@ -74,7 +125,6 @@
   padding: 0;
   height: 120px;
   width: 400px;
-  background: blue;
   border-bottom: 1px solid black;
 }
 
@@ -82,21 +132,34 @@
 
 .app_right .conversation_nav {
   height: 100px;
-  background: grey;
+  background: #ece5dd;
 }
 
-.chat_info {
+.contact_photo {
+  position: relative;
   float: left;
   height: 100px;
-  width: 150px;
-  background: red;
+  width: 100px;
+}
+
+.contact_data {
+  padding-left: 20px;
+  float:left;
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  height: 100px;
+  width:300px;
+  color: black;
+
 }
 
 .chat_actions {
-  float: right;
+  float: left;
   height: 100px;
-  min-width: 400px;
-  background: yellow;
+  padding-top: 30px;
+  text-align: right;
+  width: calc(100% - 400px);
 }
 
 .messages_area {
