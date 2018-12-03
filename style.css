@@ -31,6 +31,7 @@ input:focus {
 }
 
 .profile_pic_cnt {
+  overflow: hidden;
   position: absolute;
   top: 50%;
   left: 20px;
@@ -39,6 +40,10 @@ input:focus {
   width: 60px;
   border-radius: 100%;
   background: white;
+}
+
+.profile_pic_cnt img {
+  max-width: 100%;
 }
 
 .nav_icon {
@@ -53,14 +58,14 @@ input:focus {
   overflow: hidden;
   height: 100vh;
   width: 100vw;
-  background: orange;
+  /* background: orange; */
 }
 
 .app_left {
   float: left;
   height: 100vh;
   width: 400px;
-  background: red;
+  /* background: red; */
 }
 
 .app_right {
@@ -117,22 +122,14 @@ input:focus {
   overflow-x: hidden;
   height: calc(100vh - 180px);
   width: 400px;
-  background: lightcoral;
+  /* background: lightcoral; */
 }
 
 .contacts_list .contact {
-  margin:0;
-  padding: 0;
-  height: 120px;
+  position: relative;
+  height: 100px;
   width: 400px;
   border-bottom: 1px solid black;
-}
-
-/* App right */
-
-.app_right .conversation_nav {
-  height: 100px;
-  background: #ece5dd;
 }
 
 .contact_photo {
@@ -140,6 +137,52 @@ input:focus {
   float: left;
   height: 100px;
   width: 100px;
+  /* background: yellow; */
+}
+
+.contact_chat_data {
+  float: left;
+  height: 100px;
+  width: 300px;
+  /* background: cyan; */
+}
+
+.contact_chat_name_and_message {
+  float: left;
+  width: 240px;
+  padding: 0px 15px;
+  margin-top: 15px;
+  line-height: 35px;
+  /* background: white; */
+}
+
+.contact_chat_name_and_message .last_message {
+  overflow: hidden;
+  white-space:  nowrap;
+  text-overflow: ellipsis;
+}
+
+.contact_chat_icons {
+  float: left;
+  width: 60px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-end;
+  /* background: yellow; */
+}
+
+.contact_chat_icons .nav_icon {
+  height: 30px;
+  width: 30px;
+}
+
+/* App right */
+
+.app_right .conversation_nav {
+  height: 100px;
+  background: #ece5dd;
 }
 
 .contact_data {
@@ -151,7 +194,6 @@ input:focus {
   height: 100px;
   width:300px;
   color: black;
-
 }
 
 .chat_actions {
@@ -173,5 +215,22 @@ input:focus {
 
 .typing_area {
   height: 80px;
+  padding-left: 20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   background: grey;
+}
+
+.typing_area .message_bar {
+  flex-grow: 2;
+  margin-right: 20px;
+}
+
+.typing_area #input_messaggio {
+  height: 60px;
+  font-size: 20px;
+  border-radius: 15px;
+  padding-left: 20px;
+  width:100%;
 }
