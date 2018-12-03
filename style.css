@@ -23,12 +23,12 @@ input:focus {
 }
 
 .message.user_message {
-  background: #DBF8C9;
-  align-self: flex-end;
+  background: white;
 }
 
 .message.contact_message {
-  background: white;
+  background: #DBF8C9;
+  align-self: flex-end;
 }
 
 .profile_pic_cnt {
