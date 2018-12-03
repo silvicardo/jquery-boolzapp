@@ -219,7 +219,7 @@ input:focus {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background: grey;
+  background: #ece5dd;
 }
 
 .typing_area .message_bar {
@@ -228,9 +228,10 @@ input:focus {
 }
 
 .typing_area #input_messaggio {
-  height: 60px;
+  height: 50px;
   font-size: 20px;
-  border-radius: 15px;
+  border-radius: 25px;
+  border-style: none;
   padding-left: 20px;
   width:100%;
 }
