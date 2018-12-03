@@ -6,3 +6,109 @@
   box-sizing: border-box;
   background: black;
 }
+
+/* components */
+
+/* messages container is flex; */
+.message {
+  padding: 20px;
+  max-width: 600px;
+  border-radius: 15px;
+  margin: 10px 0px;
+}
+
+.message.user_message {
+  background: green;
+  align-self: flex-end;
+}
+
+.message.contact_message {
+  background: cyan;
+}
+
+/* main containers */
+
+#app_container {
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  background: orange;
+}
+
+.app_left {
+  float: left;
+  height: 100vh;
+  width: 400px;
+  background: red;
+}
+
+.app_right {
+  float: left;
+  height: 100vh;
+  width: calc(100vw - 400px);
+  background: white;
+}
+
+/* App Left */
+
+.app_left .general_options {
+  height: 100px;
+  background: black;
+}
+
+.search_bar {
+  height: 80px;
+  background: grey;
+}
+
+.contacts_list {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: calc(100vh - 180px);
+  width: 400px;
+  background: lightcoral;
+}
+
+.contacts_list .contact {
+  margin:0;
+  padding: 0;
+  height: 120px;
+  width: 400px;
+  background: blue;
+  border-bottom: 1px solid black;
+}
+
+/* App right */
+
+.app_right .conversation_nav {
+  height: 100px;
+  background: grey;
+}
+
+.chat_info {
+  float: left;
+  height: 100px;
+  width: 150px;
+  background: red;
+}
+
+.chat_actions {
+  float: right;
+  height: 100px;
+  min-width: 400px;
+  background: yellow;
+}
+
+.messages_area {
+  overflow-y: auto;
+  height: calc(100vh - 180px);
+  padding: 0px 40px;
+  display: flex;
+  flex-direction: column;
+  background-image: url('assets/sfondoChat.png');
+}
+
+.typing_area {
+  height: 80px;
+  background: grey;
+}
