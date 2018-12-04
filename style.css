@@ -135,6 +135,13 @@ input:focus {
   height: 100px;
   width: 400px;
 }
+.contacts_list .contact.template {
+  display: none;
+}
+
+.contacts_list .contact.selected {
+background: lightgrey;
+}
 
 .contact_photo {
   position: relative;
@@ -158,7 +165,14 @@ input:focus {
   line-height: 35px;
 }
 
+.contact_chat_name_and_message .contact_name {
+  font-size: 19px;
+  overflow: hidden;
+  white-space:  nowrap;
+  text-overflow: ellipsis;
+}
 .contact_chat_name_and_message .last_message {
+  font-size: 12px;
   overflow: hidden;
   white-space:  nowrap;
   text-overflow: ellipsis;
