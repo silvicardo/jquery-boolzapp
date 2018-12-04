@@ -46,16 +46,18 @@ function addNewMessageFrom(text, templateMessage, tagToAppend) {
   tagToAppend.append(template);
 }
 
-/************ AREA RICERCA ******************/
+/************ AREA RICERCA-LISTA CONTATTI ******************/
 var inputRicerca = $('#search_bar_input');
 var contactsArea = $('.contacts_list');
-var activeContacts = contactsDatabase;
+var activeContacts = activeContactsDatabase;
 var contactTemplate = $('.contact.template');
 
 console.log(activeContacts);
 
 //Al primo lancio mostra i contatti da cui si hanno dei messaggi
 manageContactsListFrom(activeContacts, contactTemplate, contactsArea);
+//e gestisce l'area della chat corrente per il primo contatto
+manageChatAreaFor(activeContacts[0]);
 
 //poi ad ogni rilascio di un tasto con l'input selezionato
 inputRicerca.on({
@@ -71,8 +73,12 @@ function getContactsFrom(database, searchParameter) {
 
   var result = [];
   if (searchParameter != null) {
+
+    var lowercasedSearch = searchParameter.toLowerCase();
+    var lowerCasedName;
     for (var i = 0; i < database.length; i++) {
-      if (database[i].fullName.includes(searchParameter)) {
+      lowerCasedName = database[i].fullName.toLowerCase();
+      if (lowerCasedName.includes(lowercasedSearch)) {
         result.push(database[i]);
       }
     }
@@ -85,17 +91,23 @@ function getContactsFrom(database, searchParameter) {
 
 function manageContactsListFrom(contactGroup, contactTemplate, tagToAppend) {
   for (var i = 0; i < contactGroup.length; i++) {
+    //Clone Template Element
     var contact = contactTemplate.clone();
+    //Get element's tags
     var contactName = contact.find('.contact_name');
     var latestMessage = contact.find('.last_message');
-    latestMessage.text('Check messaggio');
+    var latestMessageDate = contact.find('.last_received_time');
+    //change their content
     contactName.text(contactGroup[i].fullName);
+    latestMessage.text(contactGroup[i].conversation[0].message);
+    latestMessageDate.text(contactGroup[i].conversation[0].date);
+    //manage classes
     contact.removeClass('template');
     contact.addClass('real');
     if (i == 0) {
       contact.addClass('selected');
     }
-
+    //add to parent element
     tagToAppend.append(contact);
   }
 
@@ -105,4 +117,20 @@ function removeAllContactsFromList(){
   $('.contact.real').each(function () {
     $(this).remove();
   });
+}
+
+function manageChatAreaFor(selectedContact) {
+
+  console.log(selectedContact.fullName);
+  var conversationMessages = selectedContact.conversation;
+
+  for (var i = 0; i < conversationMessages.length; i++) {
+
+    var template = (conversationMessages[i].isContactMessage) ? contactMessageTemplate.clone() : userMessageTemplate.clone();
+    template.children('.message_text').text(conversationMessages[i].message);
+    template.addClass('real');
+    template.removeClass('template');
+    messagesArea.append(template);
+  }
+
 }
