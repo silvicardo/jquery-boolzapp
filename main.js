@@ -16,7 +16,6 @@ var contactMessageTemplate = $('.message.contact_message.template');
 
 /********* AREA MESSAGGI ********/
 
-
 //alla prima digitazione nel campo input appare il tasto invia
 //e il tasto microfono viene nascosto
 inputField.keypress(function () {
@@ -51,6 +50,8 @@ var inputRicerca = $('#search_bar_input');
 var contactsArea = $('.contacts_list');
 var activeContacts = activeContactsDatabase;
 var contactTemplate = $('.contact.template');
+var queryResult = [];
+var isSearching = false;
 
 console.log(activeContacts);
 
@@ -62,12 +63,50 @@ manageChatAreaFor(activeContacts[0]);
 //poi ad ogni rilascio di un tasto con l'input selezionato
 inputRicerca.on({
   keyup: function () {
-    removeAllContactsFromList();
-    var searchResult = getContactsFrom(activeContacts, inputRicerca.val());
-    console.log(searchResult);
-    manageContactsListFrom(searchResult, contactTemplate, contactsArea);
+    if (inputRicerca.val() == '' && event.wich == 8) {
+      console.log('ricerca vuota');
+      isSearching = false;
+      manageContactsListFrom(activeContacts, contactTemplate, contactsArea);
+      manageChatAreaFor(activeContacts[0]);
+    } else {
+      isSearching = true;
+      removeAllContactsFromList();
+      queryResult = getContactsFrom(activeContacts, inputRicerca.val());
+      if (queryResult.length > 0) {
+        console.log(queryResult);
+        console.log(queryResult.length + ' risultati trovati');
+        removeAllDisplayedMessages();
+        manageContactsListFrom(queryResult, contactTemplate, contactsArea);
+        //aggiorno i puntatori per l'evento click
+        $(document).on('click', '.contact.real', handleContactClick);
+        manageChatAreaFor(queryResult[0]);
+      }
+    }
+
   },
 });
+
+//al click di un contatto nella lista sinistra
+$('.contact.real').click(handleContactClick);
+
+function handleContactClick() {
+  console.log('cliccato contatto');
+  var clickedContact = $(this);
+  $('.contact.real').removeClass('selected');
+  clickedContact.addClass('selected');
+  var contactIndex = $('.contact.real').index(clickedContact);
+  console.log(contactIndex);
+  removeAllDisplayedMessages();
+
+  if (!isSearching) {
+    console.log('campo ricerca vuoto, popolo chat');
+    manageChatAreaFor(activeContacts[contactIndex]);
+  } else {
+    console.log('campo ricerca popolato, popolo chat');
+    manageChatAreaFor(queryResult[contactIndex]);
+  }
+}
+
 
 function getContactsFrom(database, searchParameter) {
 
@@ -102,8 +141,7 @@ function manageContactsListFrom(contactGroup, contactTemplate, tagToAppend) {
     latestMessage.text(contactGroup[i].conversation[0].message);
     latestMessageDate.text(contactGroup[i].conversation[0].date);
     //manage classes
-    contact.removeClass('template');
-    contact.addClass('real');
+    contact.removeClass('template').addClass('real').removeClass('selected');
     if (i == 0) {
       contact.addClass('selected');
     }
@@ -113,8 +151,14 @@ function manageContactsListFrom(contactGroup, contactTemplate, tagToAppend) {
 
 }
 
-function removeAllContactsFromList(){
+function removeAllContactsFromList() {
   $('.contact.real').each(function () {
+    $(this).remove();
+  });
+}
+
+function removeAllDisplayedMessages() {
+  $('.message.real').each(function () {
     $(this).remove();
   });
 }
