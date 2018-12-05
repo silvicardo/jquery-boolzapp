@@ -3,42 +3,52 @@
 var riccardoSilvi = {
   fullName: 'Riccardo Silvi',
   conversation: [],
+  picture: 'profilePic.jpeg',
 };
 var emanueleMazzante = {
   fullName: 'Emanuele Mazzante',
   conversation: [],
+  picture: 'emanueleMazzante.jpeg',
 };
 var michelePapagni = {
   fullName: 'Michele Papagni',
   conversation: [],
+  picture: 'michelePapagni.jpeg',
 };
 var fabioForghieri = {
   fullName: 'Fabio Forghieri',
   conversation: [],
+  picture: 'fabioForghieri.jpg',
 };
 var javascriptLanguage = {
   fullName: 'Javascript',
   conversation: [],
+  picture: 'javascript.png',
 };
 var chiaraPassaro = {
   fullName: 'Chiara Passaro',
   conversation: [],
+  picture: 'chiaraPassaro.jpeg',
 };
 var paolaPoggini = {
   fullName: 'Paola Poggini',
   conversation: [],
+  picture: 'paolaPoggini.png',
 };
 var giuseppeBarbara = {
   fullName: 'Giuseppe Barbara',
   conversation: [],
+  picture: 'giuseppeBarbara.png',
 };
 var gianlucaBianco = {
   fullName: 'Matteo Pelosi',
   conversation: [],
+  picture: 'matteoPelosi.jpeg',
 };
 var diegoAneli = {
   fullName: 'Diego Aneli',
   conversation: [],
+  picture: 'diegoAneli.png',
 };
 
 var appUser = riccardoSilvi;

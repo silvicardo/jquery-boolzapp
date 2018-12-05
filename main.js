@@ -60,6 +60,9 @@ manageContactsListFrom(activeContacts, contactTemplate, contactsArea);
 //e gestisce l'area della chat corrente per il primo contatto
 manageChatAreaFor(activeContacts[0]);
 
+//gestisce la nav destra in rapporto alla conversazione aperta
+manageTopRightBarFor(activeContacts[0]);
+
 //poi ad ogni rilascio di un tasto con l'input selezionato
 inputRicerca.on({
   keyup: function () {
@@ -68,6 +71,7 @@ inputRicerca.on({
       isSearching = false;
       manageContactsListFrom(activeContacts, contactTemplate, contactsArea);
       manageChatAreaFor(activeContacts[0]);
+      manageTopRightBarFor(activeContacts[0]);
     } else {
       isSearching = true;
       removeAllContactsFromList();
@@ -80,6 +84,7 @@ inputRicerca.on({
         //aggiorno i puntatori per l'evento click
         $(document).on('click', '.contact.real', handleContactClick);
         manageChatAreaFor(queryResult[0]);
+        manageTopRightBarFor(queryResult[0]);
       }
     }
 
@@ -88,6 +93,17 @@ inputRicerca.on({
 
 //al click di un contatto nella lista sinistra
 $('.contact.real').click(handleContactClick);
+
+function manageTopRightBarFor(selectedContact) {
+  //Recupero gli elementi della nav
+  var contactName = $('.conversation_nav .contact_data').find('.contact_name');
+  var contactPic = $('.conversation_nav .contact_pic');
+  var picSource = 'assets/' + selectedContact.picture;
+  //li popolo con i dati dell'utente
+  contactName.text(selectedContact.fullName);
+  contactPic.attr('src', picSource);
+
+}
 
 function handleContactClick() {
   console.log('cliccato contatto');
@@ -101,12 +117,13 @@ function handleContactClick() {
   if (!isSearching) {
     console.log('campo ricerca vuoto, popolo chat');
     manageChatAreaFor(activeContacts[contactIndex]);
+    manageTopRightBarFor(activeContacts[contactIndex]);
   } else {
     console.log('campo ricerca popolato, popolo chat');
     manageChatAreaFor(queryResult[contactIndex]);
+    manageTopRightBarFor(queryResult[contactIndex]);
   }
 }
-
 
 function getContactsFrom(database, searchParameter) {
 
@@ -136,10 +153,13 @@ function manageContactsListFrom(contactGroup, contactTemplate, tagToAppend) {
     var contactName = contact.find('.contact_name');
     var latestMessage = contact.find('.last_message');
     var latestMessageDate = contact.find('.last_received_time');
+    var contactPicture = contact.find('.contact_pic')
     //change their content
     contactName.text(contactGroup[i].fullName);
     latestMessage.text(contactGroup[i].conversation[0].message);
     latestMessageDate.text(contactGroup[i].conversation[0].date);
+    var picSource = 'assets/' + contactGroup[i].picture;
+    contactPicture.attr('src', picSource);
     //manage classes
     contact.removeClass('template').addClass('real').removeClass('selected');
     if (i == 0) {
