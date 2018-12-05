@@ -5,14 +5,34 @@ console.log('Hello from main.js. Welcome to Boolzapp');
 //MILESTONE 1
 // Aggiunta di un messaggio: l’utente scrive un testo nella parte bassa e cliccando invia il testo viene aggiunto al thread sopra, come messaggio verde
 
-//Per ora senza conservare una cronologia messaggi aggiungo solamente
+//***********CARICAMENTO DATABASE COMPLETO **************//
+var activeContacts = activeContactsDatabase;
+var selectedContact = activeContactsDatabase[0];
+var queryResult = [];
+var isSearching = false;
 
+//***********PUNTATORI JQUERY **************//
 var inputField = $('#message_input');
 var sendMessageBtn = $('#send_message');
 var micBtn = $('#trigger_mic');
 var messagesArea = $('.messages_area');
 var userMessageTemplate = $('.message.user_message.template');
 var contactMessageTemplate = $('.message.contact_message.template');
+var inputRicerca = $('#search_bar_input');
+var contactsArea = $('.contacts_list');
+var contactTemplate = $('.contact.template');
+
+//*********** PRIMO LANCIO **************//
+
+console.log(activeContacts);
+
+//Al primo lancio mostra i contatti da cui si hanno dei messaggi
+manageContactsListFrom(activeContacts, contactTemplate, contactsArea);
+//e gestisce l'area della chat corrente per il primo contatto
+manageChatAreaFor(activeContacts[0]);
+
+//gestisce la nav destra in rapporto alla conversazione aperta
+manageTopRightBarFor(activeContacts[0]);
 
 /********* AREA MESSAGGI ********/
 
@@ -29,11 +49,14 @@ inputField.keypress(function () {
 //recupera il tasto dal field e popola il testo
 //nel messaggio template che viene poi aggiunto alla pagina
 sendMessageBtn.click(function () {
-  addNewMessageFrom(inputField.val(), userMessageTemplate, messagesArea);
+  var messaggio =  inputField.val();
+  addNewMessageFrom(messaggio, userMessageTemplate, messagesArea);
+  updateDatabaseFrom(messaggio, selectedContact, false);
   inputField.val('');
   sendMessageBtn.hide();
   setTimeout(function () {
     addNewMessageFrom('Ok', contactMessageTemplate, messagesArea);
+    updateDatabaseFrom('Ok', selectedContact, true);
     micBtn.show();
   }, 1000);
 });
@@ -42,26 +65,21 @@ function addNewMessageFrom(text, templateMessage, tagToAppend) {
   var template = templateMessage.clone();
   template.children('.message_text').text(text);
   template.removeClass('template');
+  template.addClass('real');
   tagToAppend.append(template);
 }
 
+function updateDatabaseFrom(message, selectedContact, isContactMessage) {
+  console.log('updating with ' + message);
+  console.log(selectedContact);
+  //nuovo messaggio da testo, Booleano vero se messaggio Contatto,
+  //falso se messaggio utente
+  var newMessage = newObjectMessageFrom(message, isContactMessage);
+  selectedContact.conversation.push(newMessage);
+
+}
+
 /************ AREA RICERCA-LISTA CONTATTI ******************/
-var inputRicerca = $('#search_bar_input');
-var contactsArea = $('.contacts_list');
-var activeContacts = activeContactsDatabase;
-var contactTemplate = $('.contact.template');
-var queryResult = [];
-var isSearching = false;
-
-console.log(activeContacts);
-
-//Al primo lancio mostra i contatti da cui si hanno dei messaggi
-manageContactsListFrom(activeContacts, contactTemplate, contactsArea);
-//e gestisce l'area della chat corrente per il primo contatto
-manageChatAreaFor(activeContacts[0]);
-
-//gestisce la nav destra in rapporto alla conversazione aperta
-manageTopRightBarFor(activeContacts[0]);
 
 //poi ad ogni rilascio di un tasto con l'input selezionato
 inputRicerca.on({
@@ -114,15 +132,11 @@ function handleContactClick() {
   console.log(contactIndex);
   removeAllDisplayedMessages();
 
-  if (!isSearching) {
-    console.log('campo ricerca vuoto, popolo chat');
-    manageChatAreaFor(activeContacts[contactIndex]);
-    manageTopRightBarFor(activeContacts[contactIndex]);
-  } else {
-    console.log('campo ricerca popolato, popolo chat');
-    manageChatAreaFor(queryResult[contactIndex]);
-    manageTopRightBarFor(queryResult[contactIndex]);
-  }
+  selectedContact = (!isSearching) ? activeContacts[contactIndex] : queryResult[contactIndex];
+
+  manageChatAreaFor(selectedContact);
+  manageTopRightBarFor(selectedContact);
+
 }
 
 function getContactsFrom(database, searchParameter) {

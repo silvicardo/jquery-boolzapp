@@ -90,6 +90,16 @@ function randomMessage() {
   return newMessage;
 }
 
+function newObjectMessageFrom(text, isContactMessage) {
+  var newMessage = {
+    message: text,
+  };
+  newMessage.date = '10:35';
+  newMessage.isContactMessage = isContactMessage;
+
+  return newMessage;
+}
+
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
