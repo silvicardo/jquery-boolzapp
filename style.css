@@ -1,5 +1,8 @@
 /* Boolzapp - style.css */
 
+
+/* GENERAL RULES */
+
 * {
   margin: 0;
   padding: 0;
@@ -11,8 +14,17 @@ input:focus {
   outline-style: none;
 }
 
-/* components */
+li {
+  list-style: none
+}
 
+a {
+  text-decoration: none;
+}
+
+/* COMPONENTS */
+
+/* Components ----> Message */
 /* messages container is flex; */
 .message {
   position: relative;
@@ -35,6 +47,64 @@ input:focus {
   align-self: flex-end;
 }
 
+.message .message_text {
+  margin-right: 20px;
+}
+
+.message_time {
+  float: right;
+  color: grey;
+  font-size: 14px;
+}
+
+.message_time .isRead {
+  margin-left:5px;
+}
+
+.message_actions.dropdown_menu {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.message_actions.dropdown_menu.active {
+  background: white;
+  border: 1px solid lightgrey;
+}
+
+.message_actions.dropdown_menu i {
+  float: right;
+  font-size: 30px;
+  color:grey;
+}
+
+.message_actions.dropdown_menu.active i {
+  display: none;
+}
+
+.message_actions.dropdown_menu.waiting ul.dropdown_options {
+  display: none;
+  color: black;
+}
+
+.message_actions.dropdown_menu .dropdown_options li {
+  padding: 10px 15px;
+}
+
+.message_actions.dropdown_menu .dropdown_options li:hover {
+  background: grey;
+}
+
+.message_actions.dropdown_menu .dropdown_options li a {
+  color: black;
+}
+
+.message_actions.dropdown_menu .dropdown_options li:hover a {
+  color: white;
+}
+
+/* Components ----> profile picture */
+
 .profile_pic_cnt {
   overflow: hidden;
   position: absolute;
@@ -51,6 +121,7 @@ input:focus {
   max-width: 100%;
 }
 
+/* Components ----> nav icons */
 .nav_icon {
   cursor: pointer;
   width:40px;
@@ -79,9 +150,11 @@ input:focus {
   background: white;
 }
 
-/* App Left */
+/**************** App left ****************/
 
-.app_left .general_options {
+/* App left ----> general_options(nav) */
+
+.app_left nav.general_options {
   position: relative;
   height: 100px;
   display: flex;
@@ -90,6 +163,8 @@ input:focus {
   border-right: 1px solid grey;
   background: #EEEEEE;
 }
+
+/* App left ----> search bar */
 
 .search_bar_cnt {
   height: 80px;
@@ -126,6 +201,8 @@ input:focus {
   font-size: 15px;
   border-style: none;
 }
+
+/* App left ----> contacts list */
 
 .contacts_list {
   overflow-y: auto;
@@ -203,8 +280,10 @@ background: lightgrey;
   width: 20px;
 }
 
-/* App right */
+/**************** App right ****************/
 
+
+/* App right ----> Conversation Nav */
 .app_right .conversation_nav {
   height: 100px;
   background: #EEEEEE;
@@ -230,7 +309,6 @@ background: lightgrey;
   color: grey;
 }
 
-
 .chat_actions {
   float: left;
   height: 100px;
@@ -238,6 +316,8 @@ background: lightgrey;
   text-align: right;
   width: calc(100% - 400px);
 }
+
+/* App right ----> Messages Area */
 
 .messages_area {
   overflow-y: auto;
@@ -248,17 +328,7 @@ background: lightgrey;
   background-image: url('assets/sfondoChat.png');
 }
 
-.message_time {
-  float: right;
-  color: grey;
-  font-size: 14px;
-}
-
-.message_time .isRead {
-  margin-left:5px;
-}
-
-/* Typing Area */
+/* App right ----> Typing Area */
 
 .typing_area {
   height: 80px;

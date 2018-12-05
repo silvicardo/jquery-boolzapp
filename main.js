@@ -76,8 +76,14 @@ function updateDatabaseFrom(message, selectedContact, isContactMessage) {
   //falso se messaggio utente
   var newMessage = newObjectMessageFrom(message, isContactMessage);
   selectedContact.conversation.push(newMessage);
-
 }
+
+//Gestione dropdown
+$('.dropdown_menu .dropdown_options li.delete').click(function () {
+  console.log('cliccato dropdown delete');
+})
+
+
 
 /************ AREA RICERCA-LISTA CONTATTI ******************/
 

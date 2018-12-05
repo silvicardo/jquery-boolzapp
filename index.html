@@ -10,6 +10,7 @@
   <body>
 
     <div id="app_container">
+
       <div class="app_left searchAndContacts">
         <nav class="general_options">
           <div class="profile_pic_cnt">
@@ -48,6 +49,7 @@
 
         </div>
       </div>
+
       <div class="app_right currentChat">
         <nav class="conversation_nav">
             <div class="contact_photo">
@@ -71,12 +73,26 @@
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, consectetur!
             </p>
             <span class="message_time">15.15</span>
+            <div class="dropdown_menu message_actions active">
+              <i class="fas fa-caret-down"></i>
+              <ul class="dropdown_options">
+                <li><a href="#">Info Messaggio</a></li>
+                <li class="delete"><a href="#">Cancella Messaggio</a></li>
+              </ul>
+            </div>
           </div>
           <div class="message contact_message template">
             <p class="message_text">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, consectetur!
           </p>
           <span class="message_time">15.15 <img class="isRead" src="assets/spunte-blu.svg"></span>
+          <div class="dropdown_menu message_actions waiting">
+            <i class="fas fa-caret-down"></i>
+            <ul class="dropdown_options">
+              <li><a href="#">Info Messaggio</a></li>
+              <li class="delete"><a href="#">Cancella Messaggio</a></li>
+            </ul>
+          </div>
         </div>
 
         </div>
@@ -89,6 +105,7 @@
             <img id="send_message" class="nav_icon" src="assets/send.svg">
         </div>
       </div>
+
     </div>
 
 
