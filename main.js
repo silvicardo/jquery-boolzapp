@@ -79,10 +79,29 @@ function updateDatabaseFrom(message, selectedContact, isContactMessage) {
 }
 
 //Gestione dropdown
+
+$('.dropdown_menu.message_actions .fa-caret-down').click(function(){
+  toggleStatusFor($(this).parent());
+});
+
+$('.dropdown_menu .dropdown_options').mouseleave(function(){
+  toggleStatusFor($(this).parent());
+});
+
 $('.dropdown_menu .dropdown_options li.delete').click(function () {
   console.log('cliccato dropdown delete');
-})
+  //solo ui
+  var dropdownMenu = $(this).parent().parent();
+  var currentMessage = dropdownMenu.parent();
+  currentMessage.remove();
+  //da gestire lato dati
 
+});
+
+function toggleStatusFor(dropdown){
+  console.log('togglo da click');
+  dropdown.toggleClass('active').toggleClass('waiting');
+}
 
 
 /************ AREA RICERCA-LISTA CONTATTI ******************/
