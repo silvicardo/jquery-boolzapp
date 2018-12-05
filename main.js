@@ -81,26 +81,40 @@ function updateDatabaseFrom(message, selectedContact, isContactMessage) {
 //Gestione dropdown
 
 $('.dropdown_menu.message_actions .fa-caret-down').click(function(){
-  toggleStatusFor($(this).parent());
+  statusActiveFor($(this).parent());
 });
 
-$('.dropdown_menu .dropdown_options').mouseleave(function(){
-  toggleStatusFor($(this).parent());
+$('.dropdown_menu .dropdown_options').mouseleave(function () {
+  statusWaitingFor($(this).parent());
 });
 
-$('.dropdown_menu .dropdown_options li.delete').click(function () {
-  console.log('cliccato dropdown delete');
-  //solo ui
-  var dropdownMenu = $(this).parent().parent();
+// $('.dropdown_menu.active .dropdown_options li.delete').click(function () {
+//   var dropdownMenu = $(this).parent().parent();
+//   deleteMessageInUserInterfaceAndDatabaseFrom(dropdownMenu);
+// });
+
+function deleteMessageInUserInterfaceAndDatabaseFrom(dropdownMenu) {
   var currentMessage = dropdownMenu.parent();
-  currentMessage.remove();
+  var allMessages = $('.message.real');
   //da gestire lato dati
+  var messageIndex = allMessages.index(currentMessage);
+  console.log(messageIndex);
+  currentMessage.remove();
+  selectedContact.conversation.splice(messageIndex,1);
+}
 
-});
+function statusActiveFor(dropdown) {
+  if (!dropdown.hasClass('active')) {
+    console.log('mostro dropdown da click');
+    dropdown.toggleClass('active').toggleClass('waiting');
+  }
 
-function toggleStatusFor(dropdown){
-  console.log('togglo da click');
-  dropdown.toggleClass('active').toggleClass('waiting');
+}
+function statusWaitingFor(dropdown) {
+  if (!dropdown.hasClass('waiting')) {
+    console.log('nascondo dropdown da mouseleave');
+    dropdown.toggleClass('active').toggleClass('waiting');
+  }
 }
 
 
@@ -124,10 +138,12 @@ inputRicerca.on({
         console.log(queryResult.length + ' risultati trovati');
         removeAllDisplayedMessages();
         manageContactsListFrom(queryResult, contactTemplate, contactsArea);
-        //aggiorno i puntatori per l'evento click
+        //aggiorno i puntatori per gli eventi click
         $(document).on('click', '.contact.real', handleContactClick);
+
         manageChatAreaFor(queryResult[0]);
         manageTopRightBarFor(queryResult[0]);
+
       }
     }
 
@@ -149,18 +165,26 @@ function manageTopRightBarFor(selectedContact) {
 }
 
 function handleContactClick() {
+  var selectedContactIndex = $('.contact.real').index($('.contact.real.selected'));
+  // console.log(selectedContactIndex);
   console.log('cliccato contatto');
   var clickedContact = $(this);
   $('.contact.real').removeClass('selected');
   clickedContact.addClass('selected');
   var contactIndex = $('.contact.real').index(clickedContact);
-  console.log(contactIndex);
-  removeAllDisplayedMessages();
 
-  selectedContact = (!isSearching) ? activeContacts[contactIndex] : queryResult[contactIndex];
+  // console.log(contactIndex);
+  if (selectedContactIndex != contactIndex) {
+    console.log('indice toccato differente');
+    removeAllDisplayedMessages();
 
-  manageChatAreaFor(selectedContact);
-  manageTopRightBarFor(selectedContact);
+    selectedContact = (!isSearching) ? activeContacts[contactIndex] : queryResult[contactIndex];
+
+    manageChatAreaFor(selectedContact);
+    manageTopRightBarFor(selectedContact);
+  } else {
+    console.log('toccato stesso contatto');
+  }
 
 }
 
@@ -192,7 +216,7 @@ function manageContactsListFrom(contactGroup, contactTemplate, tagToAppend) {
     var contactName = contact.find('.contact_name');
     var latestMessage = contact.find('.last_message');
     var latestMessageDate = contact.find('.last_received_time');
-    var contactPicture = contact.find('.contact_pic')
+    var contactPicture = contact.find('.contact_pic');
     //change their content
     contactName.text(contactGroup[i].fullName);
     latestMessage.text(contactGroup[i].conversation[0].message);
@@ -223,7 +247,7 @@ function removeAllDisplayedMessages() {
 }
 
 function manageChatAreaFor(selectedContact) {
-
+  messagesArea = $('.messages_area');
   console.log(selectedContact.fullName);
   var conversationMessages = selectedContact.conversation;
 
@@ -234,6 +258,22 @@ function manageChatAreaFor(selectedContact) {
     template.addClass('real');
     template.removeClass('template');
     messagesArea.append(template);
+
   }
+
+  //alla fine del ciclo aggiorno i click
+  $(document).on('click', '.dropdown_menu.message_actions .fa-caret-down', function () {
+    statusActiveFor($(this).parent());
+    $('.dropdown_menu.active .dropdown_options li.delete').click(function () {
+      console.log('cancella');
+      // var dropdownMenu = $(this).parent().parent();
+      // deleteMessageInUserInterfaceAndDatabaseFrom(dropdownMenu);
+    });
+  });
+
+  $(document).on('mouseleave', '.dropdown_menu .dropdown_options', function () {
+    statusWaitingFor($(this).parent());
+  });
+
 
 }
