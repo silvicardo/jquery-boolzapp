@@ -75,7 +75,12 @@ function updateDatabaseFrom(message, selectedContact, isContactMessage) {
   //nuovo messaggio da testo, Booleano vero se messaggio Contatto,
   //falso se messaggio utente
   var newMessage = newObjectMessageFrom(message, isContactMessage);
+  if (selectedContact.conversation && selectedContact.lenght > 1) {
   selectedContact.conversation.push(newMessage);
+  }  else {
+    selectedContact.conversation = [];
+    selectedContact.conversation.push(newMessage);
+  }
 }
 
 //Gestione dropdown
@@ -86,12 +91,18 @@ $('.dropdown_menu.message_actions .fa-caret-down').click(function(){
 
 $('.dropdown_menu .dropdown_options').mouseleave(function () {
   statusWaitingFor($(this).parent());
+  console.log($(this).find('li.delete'));
+  $(this).find('li.delete').off('click');
+  // console.log($(this).find('li.delete'));
 });
 
-// $('.dropdown_menu.active .dropdown_options li.delete').click(function () {
-//   var dropdownMenu = $(this).parent().parent();
-//   deleteMessageInUserInterfaceAndDatabaseFrom(dropdownMenu);
-// });
+
+$('.message.real .dropdown_menu.active .dropdown_options li.delete').click(function () {
+  console.log('cancella');
+  var dropdownMenu = $(this).parent().parent();
+  deleteMessageInUserInterfaceAndDatabaseFrom(dropdownMenu);
+});
+
 
 function deleteMessageInUserInterfaceAndDatabaseFrom(dropdownMenu) {
   var currentMessage = dropdownMenu.parent();
@@ -100,7 +111,18 @@ function deleteMessageInUserInterfaceAndDatabaseFrom(dropdownMenu) {
   var messageIndex = allMessages.index(currentMessage);
   console.log(messageIndex);
   currentMessage.remove();
+
   selectedContact.conversation.splice(messageIndex,1);
+  //TODO:  AGGIORNAMENTO CONTACT LIST A SVUOTAMENTO MESSAGGI
+
+  //if (!selectedContact.conversation) {
+  //   console.log('vuoto aggiorno contact list');
+  //    if (!isSearching) {
+  //   manageContactsListFrom()
+  // }else {
+  //
+  // }
+  // }
 }
 
 function statusActiveFor(dropdown) {
@@ -165,7 +187,8 @@ function manageTopRightBarFor(selectedContact) {
 }
 
 function handleContactClick() {
-  var selectedContactIndex = $('.contact.real').index($('.contact.real.selected'));
+  selectedContact = $('.contact.real.selected');
+  var selectedContactIndex = $('.contact.real').index(selectedContact);
   // console.log(selectedContactIndex);
   console.log('cliccato contatto');
   var clickedContact = $(this);
@@ -219,8 +242,14 @@ function manageContactsListFrom(contactGroup, contactTemplate, tagToAppend) {
     var contactPicture = contact.find('.contact_pic');
     //change their content
     contactName.text(contactGroup[i].fullName);
+    if (contactGroup[i].conversation.length > 0) {
     latestMessage.text(contactGroup[i].conversation[0].message);
     latestMessageDate.text(contactGroup[i].conversation[0].date);
+  } else {
+    latestMessage.text('Nessun Messaggio da visualizzare');
+    latestMessageDate.text('');
+  }
+
     var picSource = 'assets/' + contactGroup[i].picture;
     contactPicture.attr('src', picSource);
     //manage classes
@@ -243,6 +272,7 @@ function removeAllContactsFromList() {
 function removeAllDisplayedMessages() {
   $('.message.real').each(function () {
     $(this).remove();
+
   });
 }
 
@@ -260,15 +290,20 @@ function manageChatAreaFor(selectedContact) {
     messagesArea.append(template);
 
   }
+  $('.dropdown_menu .dropdown_options li.delete').off('click');
+
+  $('.dropdown_menu .dropdown_options li.delete').click(function () {
+    console.log('cancella');
+    var dropdownMenu = $(this).parent().parent();
+    deleteMessageInUserInterfaceAndDatabaseFrom(dropdownMenu);
+  });
+
+
+  console.log($._data($('.dropdown_menu .dropdown_options li.delete').get(0), 'events'));
 
   //alla fine del ciclo aggiorno i click
   $(document).on('click', '.dropdown_menu.message_actions .fa-caret-down', function () {
     statusActiveFor($(this).parent());
-    $('.dropdown_menu.active .dropdown_options li.delete').click(function () {
-      console.log('cancella');
-      // var dropdownMenu = $(this).parent().parent();
-      // deleteMessageInUserInterfaceAndDatabaseFrom(dropdownMenu);
-    });
   });
 
   $(document).on('mouseleave', '.dropdown_menu .dropdown_options', function () {
