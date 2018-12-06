@@ -157,6 +157,16 @@ a {
   background: white;
 }
 
+@media all and (max-width: 700px) {
+  .app_left {
+    width: 100vw;
+  }
+
+  .app_right {
+    display: none;
+  }
+}
+
 /******************************************/
 /**************** App left ****************/
 /******************************************/
@@ -232,11 +242,23 @@ a {
   width: 400px;
 }
 
+
+
 .contacts_list .contact {
   position: relative;
   height: 100px;
   width: 400px;
   cursor: pointer;
+}
+
+@media all and (max-width: 700px) {
+  .contacts_list, .contacts_list .contact {
+    width: 100%;
+  }
+  .contacts_list .contact {
+    display: flex;
+    justify-content: center;
+  }
 }
 .contacts_list .contact.template {
   display: none;
@@ -251,6 +273,12 @@ background: lightgrey;
   float: left;
   height: 100px;
   width: 100px;
+}
+
+@media all and (max-width: 420px) {
+  .contact_photo {
+    display: none;
+  }
 }
 
 .contact_chat_data {
@@ -319,6 +347,12 @@ background: lightgrey;
 .app_right .conversation_nav .contact_photo {
   height: 65px;
 }
+
+@media all and (max-width:850px) {
+  .app_right .conversation_nav .contact_photo  {
+    display: none;
+  }
+}
 .app_right .conversation_nav .contact_photo .profile_pic_cnt {
   width: 45px;
   height: 45px;
@@ -358,11 +392,17 @@ background: lightgrey;
   width: calc(100% - 400px);
 }
 
+@media all and (max-width:850px) {
+  .chat_actions {
+    display: none;
+  }
+}
+
 /* App right ----> Messages Area */
 
 .messages_area {
   overflow-y: auto;
-  height: calc(100vh - 145px);
+  height: calc(100vh - 125px);
   padding: 0px 40px;
   display: flex;
   flex-direction: column;
@@ -372,7 +412,7 @@ background: lightgrey;
 /* App right ----> Typing Area */
 
 .typing_area {
-  height: 80px;
+  height: 60px;
   padding-left: 20px;
   display: flex;
   justify-content: space-around;
@@ -386,7 +426,7 @@ background: lightgrey;
 }
 
 .typing_area #message_input {
-  height: 50px;
+  height: 40px;
   font-size: 15px;
   border-radius: 25px;
   border-style: none;
