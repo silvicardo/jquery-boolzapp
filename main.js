@@ -111,18 +111,7 @@ function deleteMessageInUserInterfaceAndDatabaseFrom(dropdownMenu) {
   var messageIndex = allMessages.index(currentMessage);
   console.log(messageIndex);
   currentMessage.remove();
-
   selectedContact.conversation.splice(messageIndex,1);
-  //TODO:  AGGIORNAMENTO CONTACT LIST A SVUOTAMENTO MESSAGGI
-
-  //if (!selectedContact.conversation) {
-  //   console.log('vuoto aggiorno contact list');
-  //    if (!isSearching) {
-  //   manageContactsListFrom()
-  // }else {
-  //
-  // }
-  // }
 }
 
 function statusActiveFor(dropdown) {
@@ -285,11 +274,13 @@ function manageChatAreaFor(selectedContact) {
 
     var template = (conversationMessages[i].isContactMessage) ? contactMessageTemplate.clone() : userMessageTemplate.clone();
     template.children('.message_text').text(conversationMessages[i].message);
+    template.find('.message_time').text(conversationMessages[i].date)
     template.addClass('real');
     template.removeClass('template');
     messagesArea.append(template);
 
   }
+
   $('.dropdown_menu .dropdown_options li.delete').off('click');
 
   $('.dropdown_menu .dropdown_options li.delete').click(function () {
@@ -298,8 +289,7 @@ function manageChatAreaFor(selectedContact) {
     deleteMessageInUserInterfaceAndDatabaseFrom(dropdownMenu);
   });
 
-
-  console.log($._data($('.dropdown_menu .dropdown_options li.delete').get(0), 'events'));
+  // console.log($._data($('.dropdown_menu .dropdown_options li.delete').get(0), 'events'));
 
   //alla fine del ciclo aggiorno i click
   $(document).on('click', '.dropdown_menu.message_actions .fa-caret-down', function () {
@@ -309,6 +299,5 @@ function manageChatAreaFor(selectedContact) {
   $(document).on('mouseleave', '.dropdown_menu .dropdown_options', function () {
     statusWaitingFor($(this).parent());
   });
-
 
 }
